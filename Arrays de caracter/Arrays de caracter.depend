@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1554176897 source:c:\users\andy\desktop\cimma\c\arrays de caracter\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+

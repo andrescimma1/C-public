@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1554265195 source:c:\users\andy\desktop\cimma\c\arrays ejercicio legajos notas promedio y sexos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+
