@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1555886374 source:c:\users\andy\desktop\cimma\c-public\sumar valor de arrays\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+
