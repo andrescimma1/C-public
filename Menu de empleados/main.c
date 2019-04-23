@@ -4,6 +4,20 @@
 #include <conio.h>
 
 #define TAM 2
+#define TAMSEC 5
+
+typedef struct
+{
+    int id;
+    char descripcion[20];
+}eSector;
+
+typedef struct
+{
+    int dia;
+    int mes;
+    int anio;
+}eFecha;
 
 typedef struct
 {
@@ -13,7 +27,8 @@ typedef struct
     char sexo;
     float sueldo;
     int ocupado;
-
+    eSector sector;
+    eFecha fecha;
 } eEmpleado;
 
 int menu();
@@ -25,11 +40,21 @@ void mostrarEmpleados(eEmpleado vec[], int tam);
 void altaEmpleado(eEmpleado vec[], int tam);
 void bajaEmpleado(eEmpleado vec[], int tam);
 void ModificacionEmpleado(eEmpleado vec[], int tam);
+void sumarSueldos(eEmpleado vec[], int tam);
+void empleadosQueMasGanan(eEmpleado vec[], int tam);
 
 int main()
 {
     char seguir = 's';
     char confirma;
+    eSector sectores[] =
+    {
+        {1, "Sistemas"},
+        {2, "Ventas"},
+        {3, "RRHH"},
+        {4, "Industria"},
+        {5, "Medicina"},
+    }
     eEmpleado lista[TAM];
     inicializarEmpleados(lista, TAM); // llamada
 
@@ -68,6 +93,15 @@ int main()
             break;
 
         case 6:
+            sumarSueldos(lista, TAM);
+            system("pause");
+            break;
+
+        case 7:
+            empleadosQueMasGanan(lista, TAM);
+            system("pause");
+            break;
+        case 8:
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
             confirma = getche();
@@ -90,8 +124,8 @@ int main()
 
 void inicializarEmpleados(eEmpleado vec[], int tam)
 {
-
-    for(int i=0; i < tam; i++)
+    int i;
+    for(i=0; i < tam; i++)
     {
         vec[i].ocupado = 0;
     }
@@ -108,7 +142,9 @@ int menu()
     printf("3- Modificacion Empleado\n");
     printf("4- Ordenar Empleados\n");
     printf("5- Listar Empleados\n");
-    printf("6- Salir\n\n");
+    printf("6- Total Sueldos\n");
+    printf("7- Empleados que mas ganan\n");
+    printf("8- Salir\n\n");
     printf("Ingrese opcion: ");
     scanf("%d", &opcion);
 
@@ -119,8 +155,8 @@ int buscarLibre(eEmpleado vec[], int tam)
 {
 
     int indice = -1;
-
-    for(int i=0; i < tam; i++)
+    int i;
+    for(i=0; i < tam; i++)
     {
         if(vec[i].ocupado == 0)
         {
@@ -135,8 +171,8 @@ int buscarEmpleado(eEmpleado vec[], int tam, int legajo)
 {
 
     int indice = -1;
-
-    for(int i=0; i < tam; i++)
+    int i;
+    for(i=0; i < tam; i++)
     {
         if( vec[i].legajo == legajo && vec[i].ocupado == 1)
         {
@@ -150,15 +186,16 @@ int buscarEmpleado(eEmpleado vec[], int tam, int legajo)
 void mostrarEmpleado(eEmpleado emp)
 {
 
-    printf("  %d   %s   %c    %.2f\n", emp.legajo, emp.nombre, emp.sexo, emp.sueldo);
+    printf("%s   %d   %s   %c    %.2f\n    %02d/%02d/%02d \n\n", emp.sector.descripcion, emp.legajo, emp.nombre, emp.sexo, emp.sueldo,
+                                                                 emp.fecha.dia, emp.fecha.mes, emp.fecha.anio);
 
 }
 
 void mostrarEmpleados(eEmpleado vec[], int tam)
 {
     int cont= 0;
-
-    for(int i=0; i < tam; i++)
+    int i;
+    for(i=0; i < tam; i++)
     {
         if(vec[i].ocupado == 1)
         {
@@ -197,6 +234,16 @@ void altaEmpleado(eEmpleado vec[], int tam)
         {
             vec[indice].legajo = legajo;
 
+            for(i=1; i<TAMSEC+1; i++)
+
+            printf("Ingrese sector: ");
+            fflush(stdin);
+            gets(vec[indice].sector.descripcion);
+
+            printf("Ingrese fecha de nacimiento dd mm aaaa: ");
+            fflush(stdin);
+            scanf("%d %d %d", &vec[indice].fecha.dia, &vec[indice].fecha.mes, &vec[indice].fecha.anio);
+
             printf("Ingrese nombre: ");
             fflush(stdin);
             gets(vec[indice].nombre);
@@ -227,7 +274,6 @@ void bajaEmpleado(eEmpleado vec[], int tam){
 
     int legajo;
     char confirma;
-    int nuevoSueldo;
     int esta;
 
     printf("Ingrese legajo: ");
@@ -301,4 +347,47 @@ void ModificacionEmpleado(eEmpleado vec[], int tam){
 
 
 }
+
+void sumarSueldos(eEmpleado vec[], int tam)
+{
+    int i;
+    int totalSueldo = 0;
+    for(i=0; i<tam; i++)
+    {
+        if(vec[i].sueldo >= 0)
+        {
+        totalSueldo = totalSueldo + vec[i].sueldo;
+        fflush(stdin);
+        }
+    }
+    printf("El total de todos los sueldos es: %d \n", totalSueldo);
+
+}
+
+void empleadosQueMasGanan(eEmpleado vec[], int tam)
+{
+    int flag = 0;
+    int i;
+    int maximo;
+    char maximoEmp[20];
+
+    for(i=0; i<tam; i++)
+    {
+        if(flag == 0)
+        {
+            maximo = vec[i].sueldo;
+            strcpy(maximoEmp, vec[i].nombre);
+            flag = 1;
+        }
+
+        if(vec[i].sueldo > maximo)
+        {
+            maximo = vec[i].sueldo;
+            strcpy(maximoEmp, vec[i].nombre);
+        }
+    }
+    printf("El empleado con mejor sueldo es: %s. Con un sueldo de: %d \n\n", maximoEmp, maximo);
+}
+
+
 

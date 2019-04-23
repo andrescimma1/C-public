@@ -22,7 +22,7 @@ typedef struct
     int ocupado;
     eFecha fechaIngreso;
 
-} eEmpleado;
+}eEmpleado;
 
 int menu();
 void inicializarEmpleados(eEmpleado vec[], int tam);
