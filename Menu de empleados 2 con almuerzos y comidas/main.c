@@ -6,6 +6,8 @@
 
 #define TAM 16
 #define TAMSEC 5
+#define TAMALM 12
+#define TAMCOM 5
 
 typedef struct
 {
@@ -19,6 +21,20 @@ typedef struct
     int mes;
     int anio;
 }eFecha;
+
+typedef struct
+{
+    int id;
+    char descripcion[20];
+}eComida;
+
+typedef struct
+{
+    int id;
+    int idEmpleado;
+    int idComida;
+    eFecha fecha;
+}eAlmuerzo;
 
 typedef struct
 {
@@ -45,6 +61,7 @@ void sumarSueldos(eEmpleado vec[], int tam);
 void empleadosQueMasGanan(eEmpleado vec[], int tam);
 void mostrarSectores(eSector sectores[], int tamsec);
 int obtenerNombreDeSector(eSector sectores[], int tam, int idSector, char desc[]);
+void mostrarAlmuerzos(eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom);
 
 
 int main()
@@ -57,7 +74,7 @@ int main()
         {2, "Ventas"},
         {3, "RRHH"},
         {4, "Industria"},
-        {5, "Medicina"},
+        {5, "Medicina"}
     };
 
     eEmpleado lista[TAM]=
@@ -76,8 +93,35 @@ int main()
         {7439, "Gustavo", 'm', 25000, {12,12,2003}, 4, 1},
         {7654, "Diego", 'm', 35000, {23,6,2010},1, 1},
         {9040, "Viviana", 'f', 47000,{18, 7,2011}, 1, 1},
-        {7439, "Gustavo", 'm', 25000, {12,12,2003}, 4, 1},
+        {7439, "Gustavo", 'm', 25000, {12,12,2003}, 4, 1}
     };
+
+    eComida comidas[] =
+    {
+        {1, "Pastel de papa"},
+        {2, "Pizza"},
+        {3, "Hamburguesa"},
+        {4, "Empanadas"},
+        {5, "Sopa"}
+    };
+
+    eAlmuerzo almuerzos[] =
+    {
+        {100, 1234, 2, {11,04,2019}},
+        {101, 6578, 3, {12,04,2019}},
+        {102, 9040, 1, {12,04,2019}},
+        {103, 7439, 5, {14,04,2019}},
+        {104, 1234, 4, {15,04,2019}},
+        {105, 6578, 1, {15,04,2019}},
+        {106, 1234, 5, {16,04,2019}},
+        {107, 9040, 3, {16,04,2019}},
+        {108, 1234, 3, {17,04,2019}},
+        {109, 9040, 2, {18,04,2019}},
+        {110, 1234, 1, {19,04,2019}},
+        {111, 6578, 4, {20,04,2019}}
+    };
+
+
     //inicializarEmpleados(lista, TAM); // llamada
 
     do
@@ -123,7 +167,13 @@ int main()
             empleadosQueMasGanan(lista, TAM);
             system("pause");
             break;
+
         case 8:
+            mostrarAlmuerzos(almuerzos, TAMALM, lista, TAM, comidas, TAMCOM);
+            system("pause");
+            break;
+
+        case 9:
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
             confirma = getche();
@@ -166,7 +216,8 @@ int menu()
     printf("5- Listar Empleados\n");
     printf("6- Total Sueldos\n");
     printf("7- Empleados que mas ganan\n");
-    printf("8- Salir\n\n");
+    printf("8- Mostrar Almuerzos\n");
+    printf("9- Salir\n\n");
     printf("Ingrese opcion: ");
     scanf("%d", &opcion);
 
@@ -454,6 +505,19 @@ int obtenerNombreDeSector(eSector sectores[], int tam, int idSector, char desc[]
     return todoOk;
 }
 
+void mostrarAlmuerzos(eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
+{
+    printf("\n\n Los almuerzos\n");
+    printf(" ----------------\n");
+    printf("IdAlmuerzo    Legajo    Nombre    Comida       Fecha\n\n");
+    int i;
+    for(i=0; i<tamalm; i++)
+    {
+        for(i=0; i<tam; i++)
+        {
 
-
+        }
+        printf("%d\t       %d      %s  %s          %02d/%02d/%02d\n", almuerzos[i].id, almuerzos[i].idEmpleado, almuerzos[i].idComida, almuerzos[i].fecha.dia, almuerzos[i].fecha.mes, almuerzos[i].fecha.anio);
+    }
+}
 

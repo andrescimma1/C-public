@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1556326023 source:d:\cimma\c-public\menu de empleados 2 con almuerzos y comidas\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+

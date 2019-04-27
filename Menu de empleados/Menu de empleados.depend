@@ -4,9 +4,10 @@
 	<stdlib.h>
 	<ctype.h>
 
-1555978229 source:d:\cimma\c-public\menu de empleados\main.c
+1556322930 source:d:\cimma\c-public\menu de empleados\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 	<conio.h>
+	<string.h>
 
