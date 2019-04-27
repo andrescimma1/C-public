@@ -507,17 +507,36 @@ int obtenerNombreDeSector(eSector sectores[], int tam, int idSector, char desc[]
 
 void mostrarAlmuerzos(eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
 {
+    char descComida[20];
+    char nombreEmpleado[20];
+
+    system("cls");
     printf("\n\n Los almuerzos\n");
     printf(" ----------------\n");
     printf("IdAlmuerzo    Legajo    Nombre    Comida       Fecha\n\n");
-    int i;
+    int i, j, k;
     for(i=0; i<tamalm; i++)
     {
-        for(i=0; i<tam; i++)
+        strcpy(nombreEmpleado, "");
+        for(j=0; j<tam; j++)
         {
-
+            if(almuerzos[i].idEmpleado == empleados[j].legajo)
+            {
+                strcpy(nombreEmpleado, empleados[j].nombre);
+                break;
+            }
         }
-        printf("%d\t       %d      %s  %s          %02d/%02d/%02d\n", almuerzos[i].id, almuerzos[i].idEmpleado, almuerzos[i].idComida, almuerzos[i].fecha.dia, almuerzos[i].fecha.mes, almuerzos[i].fecha.anio);
+        for(k=0; k<tamcom; k++)
+        {
+            if(almuerzos[i].idComida == comidas[k].id)
+            {
+                strcpy(descComida, comidas[k].descripcion);
+                break;
+            }
+        }
+
+            printf("%d\t       %d %10s  %10s       %02d/%02d/%02d\n", almuerzos[i].id, almuerzos[i].idEmpleado, nombreEmpleado, descComida, almuerzos[i].fecha.dia, almuerzos[i].fecha.mes, almuerzos[i].fecha.anio);
+
     }
 }
 
