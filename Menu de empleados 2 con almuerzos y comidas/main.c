@@ -67,6 +67,7 @@ void cantidadDeEmpleadosXSector(eSector sectores[], int tamsec, eEmpleado emplea
 void mostrarEmpleadosConSector(eEmpleado empleados[], int tam, eSector sectores[], int tamsec);
 void empleadosDeSectorIngresadoPorUsuario(eEmpleado empleados[], int tam, eSector sectores[], int tamsec);
 void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector sectores[], int tamsec);
+void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom);
 
 
 int main()
@@ -204,6 +205,11 @@ int main()
             break;
 
         case 14:
+            ingresarSectorYmostrarAlmuerzos(sectores, TAMSEC, almuerzos, TAMALM, lista, TAM, comidas, TAMCOM);
+            system("pause");
+            break;
+
+        case 15:
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
             confirma = getche();
@@ -251,8 +257,9 @@ int menu()
     printf("10- Cantidad de Empleados por Sector\n");
     printf("11- Listar Empleados con Sector\n");
     printf("12- Listado de empleados de un sector ingresado por el usuario\n");
-    printf("13- El/los empleado/s que mas gana por sector");
-    printf("14- Salir\n\n");
+    printf("13- El/los empleado/s que mas ganan por sector\n");
+    printf("14- Elegir sector para mostrar los almuerzos que hay en este\n");
+    printf("15- Salir\n\n");
     printf("Ingrese opcion: ");
     scanf("%d", &opcion);
 
@@ -689,6 +696,55 @@ void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector secto
                 strcpy(maximoNombre, empleados[j].nombre);
             }
         }
-        printf("Empleado que mas gana en el sector %s es %s con un total de %.2f\n", sectores[i].descripcion, maximoNombre, maximo);
+        printf("Empleado que mas gana en el sector %s es %s con un total de %f\n", sectores[i].descripcion, maximoNombre, maximo);
     }
+}
+
+void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
+{
+    int sectorIngresado;
+    int i, j, k, l;
+
+    system("cls");
+    mostrarSectores(sectores, tamsec);
+    printf("\nIngrese un sector: ");
+    scanf("%d", &sectorIngresado);
+
+    for(i=0; i<tamsec; i++)
+    {
+        if(sectores[i].id == sectorIngresado && sectorIngresado == empleados[j].idSector)
+        {
+            printf("\n\nSector %s\n", sectores[i].descripcion);
+            printf("-----------------------------\n");
+            printf("Nombre      Comida      Fecha\n");
+            for(j=0; j<tam; j++)
+            {
+                if()
+                {
+                    printf("%s", empleados[j].nombre);
+                }
+            for(k=0; k<tamalm; k++)
+            {
+                if(empleados[j].legajo == almuerzos[k].idEmpleado)
+                {
+                    for(l=0; l<tamcom; l++)
+                    {
+                        if(almuerzos[k].idComida == comidas[l].id)
+                        {
+
+                            printf("     %s", comidas[l].descripcion);
+                            printf("     %02d/%02d/%02d\n", almuerzos[k].fecha.dia,
+                                                            almuerzos[k].fecha.mes,
+                                                            almuerzos[k].fecha.anio);
+
+                        }
+                    }
+                }
+            }
+            }
+        }
+    }
+
+    printf("\n\n");
+
 }
