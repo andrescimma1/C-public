@@ -703,47 +703,25 @@ void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector secto
 void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
 {
     int sectorIngresado;
-    int i, j, k, l;
+    int i, j, k;
 
     system("cls");
     mostrarSectores(sectores, tamsec);
     printf("\nIngrese un sector: ");
     scanf("%d", &sectorIngresado);
 
-    for(i=0; i<tamsec; i++)
+    printf("\n\nSector %d\n", sectorIngresado);
+    printf("-----------------------------\n");
+    printf("Nombre      Comida      Fecha\n");
+    for(i=0; i<tam; i++)
     {
-        if(sectores[i].id == sectorIngresado && sectorIngresado == empleados[j].idSector)
+        if(sectorIngresado == empleados[i].idSector)
         {
-            printf("\n\nSector %s\n", sectores[i].descripcion);
-            printf("-----------------------------\n");
-            printf("Nombre      Comida      Fecha\n");
-            for(j=0; j<tam; j++)
-            {
-                if()
-                {
-                    printf("%s", empleados[j].nombre);
-                }
-            for(k=0; k<tamalm; k++)
-            {
-                if(empleados[j].legajo == almuerzos[k].idEmpleado)
-                {
-                    for(l=0; l<tamcom; l++)
-                    {
-                        if(almuerzos[k].idComida == comidas[l].id)
-                        {
-
-                            printf("     %s", comidas[l].descripcion);
-                            printf("     %02d/%02d/%02d\n", almuerzos[k].fecha.dia,
-                                                            almuerzos[k].fecha.mes,
-                                                            almuerzos[k].fecha.anio);
-
-                        }
-                    }
-                }
-            }
-            }
+            printf("%s", empleados[i].nombre);
         }
+
     }
+
 
     printf("\n\n");
 
