@@ -703,26 +703,39 @@ void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector secto
 void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
 {
     int sectorIngresado;
+    char nombreCapturado[20];
+    char comidaCapturada[20];
     int i, j, k;
 
     system("cls");
     mostrarSectores(sectores, tamsec);
     printf("\nIngrese un sector: ");
-    scanf("%d", &sectorIngresado);
+    scanf("%d", &sectorIngresado);  //Tomo el valor del sector ingresado
 
     printf("\n\nSector %d\n", sectorIngresado);
     printf("-----------------------------\n");
     printf("Nombre      Comida      Fecha\n");
+
     for(i=0; i<tam; i++)
     {
         if(sectorIngresado == empleados[i].idSector)
         {
-            printf("%s", empleados[i].nombre);
+            strcpy(nombreCapturado, empleados[i].nombre);
+            break;
         }
-
     }
-
-
+    for(j=0; j<tamalm; j++)
+    {
+        for(k=0; k<tamcom; k++)
+        {
+            if(almuerzos[j].idComida == comidas[k].id)
+            {
+                strcpy(comidaCapturada, comidas[k].descripcion);
+                break;
+            }
+        }
+    }
+    printf("%s       %s\n", nombreCapturado, comidaCapturada);
     printf("\n\n");
 
 }
