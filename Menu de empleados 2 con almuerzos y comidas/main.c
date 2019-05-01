@@ -68,6 +68,7 @@ void mostrarEmpleadosConSector(eEmpleado empleados[], int tam, eSector sectores[
 void empleadosDeSectorIngresadoPorUsuario(eEmpleado empleados[], int tam, eSector sectores[], int tamsec);
 void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector sectores[], int tamsec);
 void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom);
+void sectorConMasEmpleados(eSector sectores[], int tamsec, eEmpleado empleados[], int tam);
 
 
 int main()
@@ -85,10 +86,10 @@ int main()
 
     eEmpleado lista[TAM]=
     {
-        {1234, "Juan", 'm', 30000,{12,3,2000},5, 1},
+        {1234, "Juan", 'm', 30000,{12,3,2000},2, 1},
         {2222, "Ana", 'f', 32000, {2,7,2010}, 2, 1},
         {2211, "Jorge", 'm', 28000,{14,5,2013}, 2, 1},
-        {3241, "Alberto", 'm', 35000, {2,9,2010},1, 1},
+        {3241, "Alberto", 'm', 35000, {2,9,2010},2, 1},
         {8944, "Sonia", 'f', 39000, {12,3,2012},3, 1},
         {2231, "Miguel", 'm', 29700, {28,7,2009}, 2, 0},
         {6578, "Adrian", 'm', 43200, {11,1,2016},5, 1},
@@ -210,6 +211,11 @@ int main()
             break;
 
         case 15:
+            sectorConMasEmpleados(sectores, TAMSEC, lista, TAM);
+            system("pause");
+            break;
+
+        case 16:
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
             confirma = getche();
@@ -259,7 +265,8 @@ int menu()
     printf("12- Listado de empleados de un sector ingresado por el usuario\n");
     printf("13- El/los empleado/s que mas ganan por sector\n");
     printf("14- Elegir sector para mostrar los almuerzos que hay en este\n");
-    printf("15- Salir\n\n");
+    printf("15- El/los sectores con mas empleados\n");
+    printf("16- Salir\n\n");
     printf("Ingrese opcion: ");
     scanf("%d", &opcion);
 
@@ -673,69 +680,75 @@ void empleadosDeSectorIngresadoPorUsuario(eEmpleado empleados[], int tam, eSecto
 
 void empleadosQueMasGananPorSector(eEmpleado empleados[], int tam, eSector sectores[], int tamsec)
 {
-    int flag;
+    int flag = 0;
     int i, j;
     float maximo;
     char maximoNombre[20];
 
     system("cls");
 
-    for(i=0; i<tamsec; i++)
+    for(i=0; i<tamsec; i++) //Recorro el array de sectores
     {
-        flag = 0;
-        for(j=0; j<tam; j++)
+        for(j=0; j<tam; j++)  //Recorro el array de empleados
         {
-            if(flag == 0)
+            if(sectores[i].id == empleados[j].idSector)
             {
+                if(flag == 0)
+                {
                 maximo = empleados[j].sueldo;
                 strcpy(maximoNombre, empleados[j].nombre);
-            }
-            if(empleados[j].sueldo > maximo)
-            {
-                maximo = empleados[j].sueldo;
-                strcpy(maximoNombre, empleados[j].nombre);
+                }
+                if(empleados[j].sueldo > maximo)
+                {
+                    maximo = empleados[j].sueldo;
+                    strcpy(maximoNombre, empleados[j].nombre);
+                }
+                flag = 1;
             }
         }
-        printf("Empleado que mas gana en el sector %s es %s con un total de %f\n", sectores[i].descripcion, maximoNombre, maximo);
+        printf("Empleado que mas gana en el sector %s es %s con un total de %.2f\n", sectores[i].descripcion, maximoNombre, maximo);
+        maximo = 0;
+        flag = 0;
     }
+}
+
+void sectorConMasEmpleados(eSector sectores[], int tamsec, eEmpleado empleados[], int tam)
+{
+    int i, j;
+    int contador = 0;
+    int flag = 0;
+    int maximo;
+    char maximoNombre[20];
+    system("cls");
+    for(i=0; i<tamsec; i++)
+    {
+        for(j=0; j<tam; j++)
+        {
+            if(sectores[i].id == empleados[j].idSector)
+            {
+                contador++;
+                if(flag == 0)
+                {
+                    maximo = contador;
+                }
+                if(contador > maximo)
+                {
+                    maximo = contador;
+                    strcpy(maximoNombre, sectores[i].descripcion);
+                }
+                flag = 1;
+            }
+        }
+
+        contador = 0;
+    }
+    printf("El sector con mas empleados es: %s. Con un total de %d empleados\n\n", maximoNombre, maximo);
+
 }
 
 void ingresarSectorYmostrarAlmuerzos(eSector sectores[], int tamsec, eAlmuerzo almuerzos[], int tamalm, eEmpleado empleados[], int tam, eComida comidas[], int tamcom)
 {
-    int sectorIngresado;
-    char nombreCapturado[20];
-    char comidaCapturada[20];
-    int i, j, k;
 
-    system("cls");
-    mostrarSectores(sectores, tamsec);
-    printf("\nIngrese un sector: ");
-    scanf("%d", &sectorIngresado);  //Tomo el valor del sector ingresado
 
-    printf("\n\nSector %d\n", sectorIngresado);
-    printf("-----------------------------\n");
-    printf("Nombre      Comida      Fecha\n");
-
-    for(i=0; i<tam; i++)
-    {
-        if(sectorIngresado == empleados[i].idSector)
-        {
-            strcpy(nombreCapturado, empleados[i].nombre);
-            break;
-        }
-    }
-    for(j=0; j<tamalm; j++)
-    {
-        for(k=0; k<tamcom; k++)
-        {
-            if(almuerzos[j].idComida == comidas[k].id)
-            {
-                strcpy(comidaCapturada, comidas[k].descripcion);
-                break;
-            }
-        }
-    }
-    printf("%s       %s\n", nombreCapturado, comidaCapturada);
-    printf("\n\n");
 
 }
