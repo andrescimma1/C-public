@@ -7,6 +7,9 @@
 #define TAMAUT 10
 #define TAMMAR 5
 #define TAMCOL 5
+#define TAMMOD 5
+#define TAMSER 4
+#define TAMTRA 10
 
 typedef struct
 {
@@ -54,14 +57,23 @@ typedef struct
 //Prototipos
 char menu();
 void inicializarAutos(eAuto autos[], int tamaut);
-void listarAuto(eAuto autos, int tamaut, eMarca marcas, int tammar, eColor colores, int tamcol);
-void listarAutos(eAuto autos[], int tamaut, eMarca marcas, int tammar, eColor colores, int tamcol);
 void altaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores [], int tamcol);
+void modificarAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol);
+void listarAuto(eAuto autos, int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol);
+void listarAutos(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol);
+int buscarAuto(eAuto autos[], int tamaut, char patenteIngresada[10]);
+void listarMarcas(eMarca marcas[], int tammar);
+void listarColores(eColor colores[], int tamcol);
+void listarServicios(eServicio servicios[], int tamser);
+void bajaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol);
+void altaTrabajo(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol, eServicio servicios[], int tamser, eTrabajo trabajos[], int tamtra);
+void listarTrabajos(eAuto autos[], int tamaut, eServicio servicios[], int tamser, eTrabajo trabajos[], int tamtra);
 
 int main()
 {
     char seguir = 's';
     eAuto autos[TAMAUT];
+    eTrabajo trabajos[TAMTRA];
     inicializarAutos(autos, TAMAUT);
 
     eMarca marcas[] =
@@ -84,10 +96,10 @@ int main()
 
     eServicio servicios[] =
     {
-        {20000, "Lavado: $", 250},
-        {20001, "Pulido: $", 300},
-        {20002, "Encerado: $", 400},
-        {20003, "Completo: $", 600},
+        {20000, "Lavado", 250},
+        {20001, "Pulido", 300},
+        {20002, "Encerado", 400},
+        {20003, "Completo", 600},
     };
 
     do
@@ -99,11 +111,11 @@ int main()
                 system("pause");
                 break;
             case 'b':
-                printf("\nAnda bien\n");
+                modificarAuto(autos, TAMAUT, marcas, TAMMAR, colores, TAMCOL);
                 system("pause");
                 break;
             case 'c':
-                printf("\nAnda bien\n");
+                bajaAuto(autos, TAMAUT, marcas, TAMMAR, colores, TAMCOL);
                 system("pause");
                 break;
             case 'd':
@@ -111,23 +123,23 @@ int main()
                 system("pause");
                 break;
             case 'e':
-                printf("\nAnda bien\n");
+                listarMarcas(marcas, TAMMAR);
                 system("pause");
                 break;
             case 'f':
-                printf("\nAnda bien\n");
+                listarColores(colores, TAMCOL);
                 system("pause");
                 break;
             case 'g':
-                printf("\nAnda bien\n");
+                listarServicios(servicios, TAMSER);
                 system("pause");
                 break;
             case 'h':
-                printf("\nAnda bien\n");
+                altaTrabajo(autos, TAMAUT, marcas, TAMMAR, colores, TAMCOL, servicios, TAMSER, trabajos, TAMTRA);
                 system("pause");
                 break;
             case 'i':
-                printf("\nAnda bien\n");
+                listarTrabajos(autos, TAMAUT, servicios, TAMSER, trabajos, TAMTRA);
                 system("pause");
                 break;
             default:
@@ -198,14 +210,14 @@ void altaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor col
     fflush(stdin);
     gets(autos[indice].patente);
 
-    printf("\n\n");
+    printf("\n\nID     MARCA\n");
 
     for(i=0; i<tammar; i++)
     {
         printf("%d    %s\n", marcas[i].id, marcas[i].descripcion);
     }
 
-    printf("\nIngrese marca: ");
+    printf("\nIngrese ID de la marca: ");
     fflush(stdin);
     scanf("%d", &autos[indice].idMarca);
 
@@ -216,14 +228,14 @@ void altaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor col
         scanf("%d", &autos[indice].idMarca);
     }
 
-    printf("\n\n");
+    printf("\n\nID     COLOR\n");
 
     for(i=0; i<tamcol; i++)
     {
         printf("%d    %s\n", colores[i].id, colores[i].nombreColor);
     }
 
-    printf("\nIngrese color: ");
+    printf("\nIngrese ID del color: ");
     fflush(stdin);
     scanf("%d", &autos[indice].idColor);
 
@@ -234,51 +246,60 @@ void altaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor col
         scanf("%d", &autos[indice].idColor);
     }
 
+    printf("\nIngrese modelo: ");
+    fflush(stdin);
+    scanf("%d", &autos[indice].modelo);
+
     autos[indice].id = 1;
+
 
 }
 
 void modificarAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol)
 {
-    char patenteIngresada[20];
-    int i, j, k;
+    char patenteIngresada[10];
+    int j, k;
+    int esta;
 
     system("cls");
 
+    listarAutos(autos, tamaut, marcas, tammar, colores, tamcol);
     printf("Ingrese la patente: ");
+    fflush(stdin);
     gets(patenteIngresada);
+    esta = buscarAuto(autos, tamaut, patenteIngresada);
+    printf("%s", patenteIngresada);
 
-    for(i=0; i<tamaut; i++)
+    if(esta == -1)
     {
-        if(patenteIngresada == autos[i].patente)
-        {
-            printf("\n\n");
-
-            for(j=0; j<tammar; j++)
-                {
-                    printf("%d    %s\n", marcas[j].id, marcas[j].descripcion);
-                }
-            printf("\nIngrese marca: ");
-            fflush(stdin);
-            scanf("%d", &autos[i].idMarca);
-
-            printf("\n\n");
-
-            for(k=0; k<tamcol; k++)
-                {
-                    printf("%d    %s\n", colores[k].id, colores[k].nombreColor);
-                }
-
-                printf("\nIngrese color: ");
-                fflush(stdin);
-                scanf("%d", &autos[i].idColor);
-            break;
-        }
+        printf("\nLa patente ingresada no se encuentra disponible\n\n");
     }
+    else
+    {
+        printf("\n\nID     MARCA\n");
 
+        for(j=0; j<tammar; j++)
+            {
+                printf("%d    %s\n", marcas[j].id, marcas[j].descripcion);
+            }
+        printf("\nIngrese ID de la nueva marca: ");
+        fflush(stdin);
+        scanf("%d", &autos[esta].idMarca);
+
+        printf("\n\nID     COLOR\n");
+
+        for(k=0; k<tamcol; k++)
+            {
+                printf("%d    %s\n", colores[k].id, colores[k].nombreColor);
+            }
+
+        printf("\nIngrese la ID del nuevo color: ");
+        fflush(stdin);
+        scanf("%d", &autos[esta].idColor);
+    }
 }
 
-void listarAuto(eAuto autos, int tamaut, eMarca marcas, int tammar, eColor colores, int tamcol)
+void listarAuto(eAuto autos, int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol)
 {
     int i, j;
     char marcaEncontrada[20];
@@ -288,29 +309,33 @@ void listarAuto(eAuto autos, int tamaut, eMarca marcas, int tammar, eColor color
     {
         if(autos.idMarca == marcas[i].id)
         {
-            marcaEncontrada = marcas[i].descripcion;
+            strcpy(marcaEncontrada, marcas[i].descripcion);
             break;
         }
     }
 
-    for(i=0; i<tamcol; i++)
+    for(j=0; j<tamcol; j++)
     {
-        if(autos.idColor == colores[i].id)
+        if(autos.idColor == colores[j].id)
         {
-            colorEncontrado = colores[i].nombreColor;
+            strcpy(colorEncontrado, colores[j].nombreColor);
             break;
         }
     }
 
-    printf("\n%s      %s       %s", autos.patente, marcaEncontrada, colorEncontrado);
+
+
+    printf("\n%10s   %10s   %10s   %d", autos.patente, marcaEncontrada, colorEncontrado, autos.modelo);
 }
 
 void listarAutos(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol)
 {
-
     int cont= 0;
     int i;
-    for(i=0; i < tamaut; i++)
+
+    system("cls");
+    printf("Patente     Marca     Color     Modelo\n\n");
+    for(i=0; i<tamaut; i++)
     {
         if(autos[i].id == 1)
         {
@@ -318,8 +343,184 @@ void listarAutos(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor 
             cont++;
         }
     }
+
+    printf("\n\n");
     if(cont == 0)
     {
         printf("\n\nNo hay autos que mostrar\n\n");
+    }
+}
+
+int buscarAuto(eAuto autos[], int tamaut, char patenteIngresada[10])
+{
+    int i;
+    int indice = -1;
+    for(i=0; i<tamaut; i++)
+    {
+        if(strcmp(patenteIngresada, autos[i].patente) == 0)
+        {
+            indice = i;
+            break;
+        }
+    }
+    return indice;
+}
+
+void listarMarcas(eMarca marcas[], int tammar)
+{
+    int i;
+    printf("\n\nListado de Marcas\n\n");
+    printf("ID      MARCA\n");
+
+    for(i=0; i<tammar; i++)
+    {
+        printf("%d      %s\n", marcas[i].id, marcas[i].descripcion);
+    }
+    printf("\n\n");
+}
+
+void listarColores(eColor colores[], int tamcol)
+{
+    int i;
+    printf("\n\nListado de Colores\n\n");
+    printf("ID      COLOR\n");
+
+    for(i=0; i<tamcol; i++)
+    {
+        printf("%d      %s\n", colores[i].id, colores[i].nombreColor);
+    }
+    printf("\n\n");
+}
+
+void listarServicios(eServicio servicios[], int tamser)
+{
+    int i;
+    printf("\n\nListado de Servicios\n\n");
+    printf("ID      Descripcion      Precio\n");
+
+    for(i=0; i<tamser; i++)
+    {
+        printf("%d      %10s      $%d\n", servicios[i].id, servicios[i].descripcion, servicios[i].precio);
+    }
+    printf("\n\n");
+}
+
+void bajaAuto(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol)
+{
+    int i;
+    char patenteIngresada[20];
+    char respuesta;
+    system("cls");
+
+    listarAutos(autos, tamaut, marcas, tammar, colores, tamcol);
+    printf("Ingrese la patente: ");
+    fflush(stdin);
+    gets(patenteIngresada);
+
+    for(i=0; i<tamaut; i++)
+    {
+        if(strcmp(patenteIngresada, autos[i].patente) == 0)
+        {
+            listarAuto(autos[i], tamaut, marcas, tammar, colores, tamcol);
+            printf("\n\nSeguro que quiere dar de baja el auto (s/n): ");
+            fflush(stdin);
+            scanf("%c", &respuesta);
+            respuesta = tolower(respuesta);
+            if(respuesta == 's')
+            {
+                autos[i].id = 0;
+                printf("\nLa eliminacion se ha realizado con exito\n\n");
+            }
+            else
+            {
+                printf("\nLa eliminacion ha sido cancelada\n\n");
+            }
+        }
+    }
+}
+
+void altaTrabajo(eAuto autos[], int tamaut, eMarca marcas[], int tammar, eColor colores[], int tamcol, eServicio servicios[], int tamser, eTrabajo trabajos[], int tamtra)
+{
+    int i, j, k;
+    int cont = 0;
+    char patenteIngresada[10];
+    int servicioIngresado;
+
+    listarAutos(autos, tamaut, marcas, tammar, colores, tamcol);
+    printf("\n\nElija un auto por su patente: ");
+    fflush(stdin);
+    gets(patenteIngresada);
+    listarServicios(servicios, tamser);
+    printf("\n\nElija un servicio por su ID: ");
+    fflush(stdin);
+    scanf("%d", &servicioIngresado);
+
+    for(i=0; i<tamtra; i++)
+    {
+        for(j=0; j<tamaut; j++)
+        {
+            if(strcmp(patenteIngresada, autos[j].patente) == 0)
+            {
+                strcpy(trabajos[i].patente, patenteIngresada);
+                break;
+            }
+        }
+
+        for(k=0; k<tamser; k++)
+        {
+            if(servicioIngresado == servicios[k].id && autos[j].id == 1)
+            {
+                trabajos[i].idServicio = servicioIngresado;
+                cont++;
+                break;
+            }
+        }
+    }
+    if(cont == 0)
+    {
+        printf("\nError, patente o ID servicio incorrecto\n\n");
+    }
+    else
+    {
+        printf("\nDatos ingresados con exito");
+    }
+}
+
+void listarTrabajos(eAuto autos[], int tamaut, eServicio servicios[], int tamser, eTrabajo trabajos[], int tamtra)
+{
+    int i, j, k;
+    int cont1 = 0;
+    int cont2 = 0;
+    char patenteEncontrada[10];
+    char servicioEncontrado[20];
+    system("cls");
+    printf("Listado de Trabajos\n\n");
+
+    for(i=0; i<tamtra; i++)
+    {
+        for(j=0; j<tamaut; j++)
+        {
+            if(trabajos[i].patente == autos[j].patente)
+            {
+                strcpy(patenteEncontrada, autos[j].patente);
+                cont1++;
+                break;
+            }
+        }
+        for(k=0; k<tamser; k++)
+        {
+            if(trabajos[i].idServicio == servicios[j].id)
+            {
+                strcpy(servicioEncontrado, servicios[j].descripcion);
+                cont2++;
+                break;
+            }
+        }
+        if(cont1 > 0 && cont2 > 0)
+        {
+            printf("\n%s    %s", patenteEncontrada, servicioEncontrado);
+        }
+        cont1 = 0;
+        cont2 = 0;
     }
 }
