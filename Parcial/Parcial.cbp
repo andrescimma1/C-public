@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Cimma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Cimma.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
