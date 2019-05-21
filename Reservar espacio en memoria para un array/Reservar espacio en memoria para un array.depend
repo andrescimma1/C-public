@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1558398924 source:d:\cimma\c-public\reservar espacio en memoria para un array\main.c
+	<stdio.h>
+	<stdlib.h>
+
