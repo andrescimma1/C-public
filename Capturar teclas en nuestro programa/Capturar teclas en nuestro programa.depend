@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1558578012 source:c:\users\andy\desktop\cimma\c-public\capturar teclas en nuestro programa\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
