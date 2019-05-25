@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1558746747 source:d:\cimma\c-public\autos con manejo de archivos 2 binarios\main.c
+	<stdio.h>
+	<stdlib.h>
+
