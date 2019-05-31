@@ -58,9 +58,11 @@ int buscarLibre(eAuto* listaut, int len);
 void altaAuto(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 void listarMarcas(eMarca* listmarcas, int lenmarcas);
 void listarColores(eColor* listcolores, int lencolores);
-void listarAutos(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
+int listarAutos(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 void listarAuto(eAuto* pAuto, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 void listarServicios(eServicio* listservicios, int lenservicios);
+void bajaAuto(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
+void modificarAuto(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 
 int main()
 {
@@ -100,11 +102,11 @@ int main()
                 system("pause");
                 break;
             case 'b':
-
+                modificarAuto(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL);
                 system("pause");
                 break;
             case 'c':
-
+                bajaAuto(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL);
                 system("pause");
                 break;
             case 'd':
@@ -124,11 +126,11 @@ int main()
                 system("pause");
                 break;
             case 'h':
-                altaAuto(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL);
+
                 system("pause");
                 break;
             case 'i':
-                altaAuto(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL);
+
                 system("pause");
                 break;
             default:
@@ -337,21 +339,22 @@ void listarAuto(eAuto* pAuto, eMarca* listmarcas, int lenmarcas, eColor* listcol
         }
     }
 
-    printf("%7s    %7s    %7s    %d", pAuto->patente, marcaEncontrada, colorEncontrado, pAuto->modelo);
+    printf("%7s    %7s    %7s    %d\n", pAuto->patente, marcaEncontrada, colorEncontrado, pAuto->modelo);
 }
 
 
 /** \brief Muestra una lista con todos los autos.
  *
  * \param int i;
- * \param
- * \return No devuelve nada.
+ * \param int indice = -1;
+ * \return Devuelve -1 si no se encontraron autos, o devuelve 0 si se encontraron.
  *
  */
 
-void listarAutos(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores)
+int listarAutos(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores)
 {
     int i;
+    int indice = -1;
 
     system("cls");
 
@@ -363,10 +366,19 @@ void listarAutos(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eCo
     {
         if(listaut[i].id == 1)
         {
+            indice = 0;
             listarAuto((listaut + i), listmarcas, lenmarcas, listcolores, lencolores);
         }
     }
 
+    if(indice == -1)
+    {
+        printf("\nNo hay autos que mostrar\n\n");
+    }
+
+    printf("\n\n");
+
+    return indice;
 }
 
 /** \brief Muestra una lista de todos los servicios.
@@ -391,4 +403,120 @@ void listarServicios(eServicio* listservicios, int lenservicios)
     {
         printf("%d     %10s    $ %d\n", listservicios[i].id, listservicios[i].descripcion, listservicios[i].precio);
     }
+}
+
+/** \brief Lista todos los autos, le pregunta al usuario la patente del auto que quiere ser
+ * dado de baja. Recorre los autos para encontrar esa patente y realiza una baja lógica.
+ *
+ * \param int i, indice = -1;
+ * \param char patenteIngresada[7], seguro;
+ * \return No devuelve nada.
+ *
+ */
+
+void bajaAuto(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores)
+{
+    int i;
+    char patenteIngresada[7];
+    char seguro;
+    int indice = -1;
+
+    indice = listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores);
+
+    if(indice == 0)
+    {
+        printf("\n\nIngrese patente del auto que desea dar de baja: ");
+        fflush(stdin);
+        gets(patenteIngresada);
+
+        for(i=0; i<len; i++)
+        {
+            if(strcmp(patenteIngresada, listaut[i].patente) == 0)
+            {
+                printf("\n\n");
+                listarAuto((listaut + i), listmarcas, lenmarcas, listcolores, lencolores);
+
+                printf("\nSeguro que quiere dar de baja este auto?(s/n): ");
+                fflush(stdin);
+                scanf("%c", &seguro);
+                if(seguro == 's')
+                {
+                    listaut[i].id = 0;
+                    printf("\n\nEl auto fue dado de baja con exito!!\n\n");
+                    break;
+                }
+                else
+                {
+                    printf("\n\nSe ha cancelado la operacion\n\n");
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/** \brief Lista todos los autos, si no hay autos muestra un mensaje en base a ello, sino
+ *  pide la patente del auto y da a elegir para modificar el color o el modelo.
+ *
+ * \param int i;
+ * \param int indice = -1;
+ * \param int idModificacion;
+ * \param char patenteIngresada[7];
+ * \return No devuelve nada.
+ *
+ */
+
+void modificarAuto(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores)
+{
+    int i;
+    int indice = -1;
+    int idModificacion;
+    char patenteIngresada[7];
+
+    indice = listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores);
+
+    if(indice == -1)
+    {
+        printf("\n\nNo hay autos que mostrar\n\n");
+    }
+    else
+    {
+        printf("\n\nIngrese la patente del auto que desea modificar: ");
+        fflush(stdin);
+        gets(patenteIngresada);
+        for(i=0; i<len; i++)
+        {
+            if(strcmp(patenteIngresada, listaut[i].patente) == 0)
+            {
+                printf("\n\n1. Modificar el color.\n");
+                printf("2. Modificar el modelo.\n\n");
+                printf("Ingrese el numero: ");
+                fflush(stdin);
+                scanf("%d", &idModificacion);
+
+                if(idModificacion == 1)
+                {
+                    listarColores(listcolores, lencolores);
+                    printf("\n\nIngrese ID del nuevo color: ");
+                    fflush(stdin);
+                    scanf("%d", &listaut[i].idColor);
+                    break;
+                }
+                else if(idModificacion == 2)
+                {
+                    printf("\n\nIngrese nuevo modelo: ");
+                    fflush(stdin);
+                    scanf("%d", &listaut[i].modelo);
+                    break;
+                }
+                else
+                {
+                    printf("\n\nID ingresada incorrecta\n\n");
+                    break;
+                }
+            }
+        }
+    }
+
+
 }
