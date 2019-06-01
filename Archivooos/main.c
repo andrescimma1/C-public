@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define TAM 20
 
@@ -12,21 +13,21 @@ typedef struct
     int estado;
 }eEmpleado;
 
-void inicializarEmpleados(eEmpleado* vec, int tam);
 eEmpleado* newEmpleado();
 eEmpleado* newEmpleadoParam(int id, char* nombre, char* apellido, float sueldo);
-int buscarLibre(eEmpleado* vec, int tam);
 void mostrarEmpleado(eEmpleado* emp);
-void mostrarEmpleados(eEmpleado* vec, int tam);
+void mostrarEmpleados(eEmpleado** vec, int size);
 int menu();
-void altaEmpleado(eEmpleado* vec, int tam);
-void cargarEmpleados(eEmpleado* vec, int tam);
+void altaEmpleado(eEmpleado* vec, int size);
+void cargarEmpleados(eEmpleado* vec, int size);
 int buscarLibre(eEmpleado* vec, int tam);
-void guardarEmpleadosBinario(eEmpleado* vec, int tam);
-void imprimirEmpleados(eEmpleado* vec, int tam);
+void guardarEmpleadosBinario(eEmpleado* vec, int size);
+void imprimirEmpleados(eEmpleado* vec, int size);
 
 int main()
 {
+    int indice;
+    int auxInt;
     char seguir = 's';
     eEmpleado* lista = (eEmpleado*)malloc(sizeof(eEmpleado)* TAM);
     if(lista == NULL)
@@ -35,7 +36,6 @@ int main()
         system("pause");
         exit(EXIT_FAILURE);
     }
-    inicializarEmpleados(lista, TAM);
 
     printf("Empleados inicializados\n\n");
 
@@ -44,23 +44,30 @@ int main()
        switch(menu())
        {
             case 1:
-                cargarEmpleados(lista, TAM);
+                cargarEmpleados(lista, size);
                 system("pause");
                 break;
             case 2:
-                altaEmpleado(lista, TAM);
+                if(altaEmpleado(lista, size)==1)
+                {
+                    size++;
+                    if ((agrandarLista(lista, size)) == 1)
+                    {
+                        printf("Alta Exitosa!!\n\n");
+                    }
+                }
                 system("pause");
                 break;
             case 3:
-                mostrarEmpleados(lista, TAM);
+                mostrarEmpleados(lista, size);
                 system("pause");
                 break;
             case 4:
-                guardarEmpleadosBinario(lista, TAM);
+                guardarEmpleadosBinario(lista, size);
                 system("pause");
                 break;
             case 5:
-                imprimirEmpleados(lista, TAM);
+                imprimirEmpleados(lista, size);
                 system("pause");
                 break;
             case 6:
@@ -145,16 +152,16 @@ void mostrarEmpleado(eEmpleado* emp)
     }
 }
 
-void mostrarEmpleados(eEmpleado* vec, int tam)
+void mostrarEmpleados(eEmpleado** vec, int size)
 {
     int i;
 
-    if(vec != NULL && tam > 0)
+    if(vec != NULL && size > 0)
     {
         printf("Id    Nombre   Apellido   Sueldo\n\n");
-        for(i=0; i<tam; i++)
+        for(i=0; i<size; i++)
         {
-            if((vec + i)->estado == 1)
+            if((*(vec + i))->estado == 1)
             {
                 mostrarEmpleado(vec + i);
             }
@@ -183,45 +190,41 @@ int menu()
 
 }
 
-void altaEmpleado(eEmpleado* vec, int tam)
+int altaEmpleado(eEmpleado** vec, int size)
 {
+    int todoOk = 0;
     int indice;
     int auxInt;
     char auxCad[20];
     char auxCad2[20];
     float auxFloat;
 
-    indice = buscarLibre(vec, tam);
+    //indice = buscarLibre(vec, tam);
 
-    if(indice == -1)
+    printf("Ingrese id: ");
+    scanf("%d", &auxInt);
+
+    printf("Ingrese nombre: ");
+    fflush(stdin);
+    gets(auxCad);
+
+    printf("Ingrese apellido: ");
+    fflush(stdin);
+    gets(auxCad2);
+
+    printf("Ingrese sueldo: ");
+    scanf("%f", &auxFloat);
+
+    eEmpleado* nuevoEmpleado = newEmpleadoParam(auxInt, auxCad, auxCad2, auxFloat);
+
+    if(nuevoEmpleado != NULL)
     {
-        printf("No hay lugar\n");
+        *(vec + size) = nuevoEmpleado;
+
+        todoOk = 1;
     }
-    else
-    {
-        printf("Ingrese id: ");
-        scanf("%d", &auxInt);
 
-        printf("Ingrese nombre: ");
-        fflush(stdin);
-        gets(auxCad);
-
-        printf("Ingrese apellido: ");
-        fflush(stdin);
-        gets(auxCad2);
-
-        printf("Ingrese sueldo: ");
-        scanf("%f", &auxFloat);
-
-        eEmpleado* nuevoEmpleado = newEmpleadoParam(auxInt, auxCad, auxCad2, auxFloat);
-
-        if(nuevoEmpleado != NULL)
-        {
-            *(vec + indice) = *nuevoEmpleado;
-
-            free(nuevoEmpleado);
-        }
-    }
+    return todoOk;
 
 }
 
@@ -251,19 +254,19 @@ void imprimirEmpleados(eEmpleado* vec, int tam)
     }
 }
 
-void guardarEmpleadosBinario(eEmpleado* vec, int tam)
+void guardarEmpleadosBinario(eEmpleado* vec, int size)
 {
     FILE* f;
     int i;
 
-    if(vec != NULL && tam > 0)
+    if(vec != NULL && size > 0)
     {
         f = fopen("./empleados.bin", "wb");
         if(f != NULL)
         {
-            for(i=0; i<tam; i++)
+            for(i=0; i<size; i++)
             {
-                if((vec + i)->estado == 1)
+                if(*(vec + i)->estado == 1)
                 {
                     fwrite((vec + i), sizeof(eEmpleado), 1 ,f);
                 }
@@ -273,7 +276,7 @@ void guardarEmpleadosBinario(eEmpleado* vec, int tam)
     }
 }
 
-void cargarEmpleados(eEmpleado* vec, int tam)
+void cargarEmpleados(eEmpleado* vec, int size)
 {
     int indice;
     FILE* f;
@@ -283,7 +286,7 @@ void cargarEmpleados(eEmpleado* vec, int tam)
 
     while(!feof(f))  //Mientras no haya llegado al final del fichero
     {
-        indice = buscarLibre(vec, tam);
+        //indice = buscarLibre(vec, size);
 
         cant = fread((vec + indice), sizeof(eEmpleado), 1, f);
 
@@ -304,3 +307,18 @@ void cargarEmpleados(eEmpleado* vec, int tam)
     fclose(f);
 }
 
+int agrandarLista(eEmpleado** vec, int size)
+{
+    int todoOk = 0;
+    eEmpleado** aux;
+
+    aux = (eEmpleado**)malloc(vec, sizeof(eEmpleado*)* (size + 1));
+
+    if(aux != NULL)
+    {
+        vec = aux;
+        todoOk = 1;
+    }
+
+    return todoOk;
+}
