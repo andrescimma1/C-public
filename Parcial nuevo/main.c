@@ -73,6 +73,9 @@ int listarTrabajos(eTrabajo* listtrabajos, int lentrabajos, eServicio* listservi
 void mostrarAutosColorNegro(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 void mostrarAutosMarcaSeleccionada(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores);
 void mostrarTrabajosAutoSeleccionado(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios, eTrabajo* listtrabajos, int lentrabajos);
+void listarAutosSinTrabajo(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios, eTrabajo* listtrabajos, int lentrabajos);
+void importeTotalAutoSeleccionado(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios, eTrabajo* listtrabajos, int lentrabajos);
+void mostrarServicioMasPedido(eTrabajo* listtrabajos, int lentrabajos, eServicio* listservicios, int lenservicios);
 
 int main()
 {
@@ -158,15 +161,15 @@ int main()
                 system("pause");
                 break;
             case '4':
-                listarTrabajos(arrayTrabajos, TAMTRA, arrayServicios, TAMSER);
+                listarAutosSinTrabajo(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayServicios, TAMSER, arrayTrabajos, TAMTRA);
                 system("pause");
                 break;
             case '5':
-                listarTrabajos(arrayTrabajos, TAMTRA, arrayServicios, TAMSER);
+                importeTotalAutoSeleccionado(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayServicios, TAMSER, arrayTrabajos, TAMTRA);
                 system("pause");
                 break;
             case '6':
-                listarTrabajos(arrayTrabajos, TAMTRA, arrayServicios, TAMSER);
+                mostrarServicioMasPedido(arrayTrabajos, TAMTRA, arrayServicios, TAMSER);
                 system("pause");
                 break;
             case '7':
@@ -649,6 +652,7 @@ int buscarTrabajoLibre(eTrabajo* listtrabajos, int lentrabajos)
 void altaTrabajo(eTrabajo* listtrabajos, int lentrabajos, eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios)
 {
     int indice;
+    int indice2;
 
     indice = buscarTrabajoLibre(listtrabajos, lentrabajos);
 
@@ -660,9 +664,9 @@ void altaTrabajo(eTrabajo* listtrabajos, int lentrabajos, eAuto* listaut, int le
     {
         system("cls");
 
-        indice = listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores);
+        indice2 = listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores);
 
-        if(indice == -1)
+        if(indice2 == -1)
         {
             printf("\nNo se puede realizar la operacion\n\n");
         }
@@ -902,4 +906,159 @@ void mostrarTrabajosAutoSeleccionado(eAuto* listaut, int len, eMarca* listmarcas
     {
         printf("No hay trabajos que mostrar.\n\n");
     }
+}
+
+void listarAutosSinTrabajo(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios, eTrabajo* listtrabajos, int lentrabajos)
+{
+    int i, j;
+
+    system("cls");
+
+    printf("LISTADO DE AUTOS QUE NO TIENEN TRABAJOS\n");
+    printf("_______________________________________\n");
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        for(j=0; j<len; j++)
+        {
+            if(listtrabajos[i].estado != 1 && listaut[i].id == 1)
+            {
+                listarAuto((listaut + i), listmarcas, lenmarcas, listcolores, lencolores);
+            }
+        }
+    }
+
+}
+
+/** \brief Pide al usuario la patente de un auto y en base a ese dato la funcion suma
+ *          e informa el importe total de los trabajos realizados de ese auto.
+ * \param int i, j;
+ * \param int todoOk = 0;
+ * \param int importeTotal = 0;
+ * \param char patenteIngresada[7];
+ * \return No devuelve nada.
+ *
+ */
+
+void importeTotalAutoSeleccionado(eAuto* listaut, int len, eMarca* listmarcas, int lenmarcas, eColor* listcolores, int lencolores, eServicio* listservicios, int lenservicios, eTrabajo* listtrabajos, int lentrabajos)
+{
+    int i, j;
+    int todoOk = 0;
+    int importeTotal = 0;
+    char patenteIngresada[7];
+
+    system("cls");
+
+    listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores);
+
+    printf("\nElija un auto por su patente: ");
+    fflush(stdin);
+    gets(patenteIngresada);
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        if(strcmp(patenteIngresada, listtrabajos[i].patente) == 0)
+        {
+            for(j=0; j<lenservicios; j++)
+            {
+                if(listtrabajos[i].idServicio == listservicios[j].id)
+                {
+                    importeTotal = importeTotal + listservicios[j].precio;
+                    todoOk = 1;
+                }
+            }
+        }
+    }
+    if(todoOk == 1)
+    {
+        printf("El importe total del auto seleccionado es de: %d\n\n", importeTotal);
+    }
+    else
+    {
+        printf("Ha ocurrido un error.\n\n");
+    }
+}
+
+
+
+void mostrarServicioMasPedido(eTrabajo* listtrabajos, int lentrabajos, eServicio* listservicios, int lenservicios)
+{
+    int i, j;
+    int cont = 0, cont1 = 0, cont2 = 0, cont3 = 0;
+
+    system("cls");
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        if(listtrabajos[i].estado == 1)
+        {
+            if(listtrabajos[i].idServicio == 20000)
+            {
+                cont++;
+            }
+            else if(listtrabajos[i].idServicio == 20001)
+            {
+                cont1++;
+            }
+            else if(listtrabajos[i].idServicio == 20002)
+            {
+                cont2++;
+            }
+            else
+            {
+                cont3++;
+            }
+        }
+    }
+
+    if(cont > cont1 && cont > cont2 && cont > cont3)
+    {
+        printf("El servicio mas pedido es el Lavado. Con un total de %d.\n\n", cont);
+    }
+    else if(cont1 > cont && cont1 > cont2 && cont1 > cont3)
+    {
+        printf("El servicio mas pedido es el Pulido. Con un total de %d.\n\n", cont1);
+    }
+    else if(cont2 > cont && cont2 > cont1 && cont2 > cont3)
+    {
+        printf("El servicio mas pedido es el Encerado. Con un total de %d.\n\n", cont2);
+    }
+    else if(cont3 > cont && cont3 > cont1 && cont3 > cont2)
+    {
+        printf("El servicio mas pedido es el Completo. Con un total de %d.\n\n", cont3);
+    }
+    else
+    {
+        printf("No se han encontrado resultados.\n\n");
+    }
+}
+
+void mostrarRecaudacionSegunFecha(eTrabajo* listtrabajos, int lentrabajos, eServicio* listservicios, int lenservicios)
+{
+    int diaIngresado;
+    int mesIngresado;
+    int anioIngresado;
+    int i, j;
+
+    system("cls");
+
+    printf("Ingrese la fecha dd/mm/aaaa: ");
+    fflush(stdin);
+    scanf("%d %d %d", &diaIngresado,
+                      &mesIngresado,
+                      &anioIngresado);
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        if(listtrabajos[i].estado == 1 && diaIngresado == listtrabajos[i].fecha.dia && mesIngresado == listtrabajos[i].fecha.mes && anioIngresado == listtrabajos[i].fecha.anio)
+        {
+            for(j=0; j<lenservicios; j++)
+            {
+
+            }
+        }
+    }
+
+
+
 }
