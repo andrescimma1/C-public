@@ -1,5 +1,47 @@
 # depslib dependency file v1.0
-1559631249 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\main.c
+1559843185 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847238 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\autos.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847245 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\clientes.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847251 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\colores.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847264 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\fecha.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847275 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\marcas.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847285 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\servicios.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1559847295 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\trabajos.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
