@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1559929371 source:c:\users\andy\desktop\cimmmaasd\c-public\manejo de archivos 3 tipo binario\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
