@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1560120755 source:c:\users\andy\desktop\vector dinamico\vector dinamico\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	"vectordinamico.h"
+
+1560119576 c:\users\andy\desktop\vector dinamico\vector dinamico\vectordinamico.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1560122092 source:c:\users\andy\desktop\vector dinamico\vector dinamico\vectordinamico.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"vectordinamico.h"
+
