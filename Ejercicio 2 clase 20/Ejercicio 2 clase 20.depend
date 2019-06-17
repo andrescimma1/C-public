@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1560805492 source:c:\users\andy\desktop\cimma\c-public\ejercicio 2 clase 20\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

@@ -14,14 +14,21 @@ void printPerson(Person* p);
 
 int main()
 {
+    Person people[1000]; //Creamos un array muy grande para que no se llene nunca la memoria
     Person p;
+    int index = 0;
 
     while(enterPerson(&p) == 0)
     {
-        printPerson(&p);
+        people[index] = p;
+        index++;
     }
 
-    system("pause");
+    int i;
+    for(i=0; i<index; i++)
+    {
+        printPerson(&people[i]);
+    }
     return 0;
 }
 
@@ -53,3 +60,4 @@ void printPerson(Person* p)
 {
     printf("Nombre:\t%s \tEdad:%d\r\n", p->name, p->age);
 }
+
