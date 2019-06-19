@@ -1,26 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Persona.h"
 
 int main()
 {
-    int size = 10;
-    int index = 0;
-    Persona** lista = (Persona**)malloc(sizeof(Persona*)*size);
+
     do
     {
         Persona* persona = persona_newPersona();
-        preguntarNombre(persona->nombre);
-        persona->edad = preguntarEdad();
-
-        lista[index] = persona;
-        index++;
-        if(index>=size)
+        //preguntarNombre(persona->nombre);
+        persona_initLista();
+        char nombreAux[20];
+        nombreAux = preguntarNombre(nombreAux);
+        if(persona_setName(persona, nombreAux))
         {
-            // incrementamos el tamaño del array
-            size = size + 10;
-            lista = realloc(lista,sizeof(Persona*)*size);
+            printf("El nombre no es valido\n");
         }
+        //persona->edad = preguntarEdad();
+        int edadAux = preguntarEdad();
+        if(persona_setEdad(persona, edadAux))
+        {
+            printf("La edad no es valida\n");
+        }
+
+        persona_addPersona(persona);
+
     }while(preguntarSalir()!='S');
 
     return 0;
