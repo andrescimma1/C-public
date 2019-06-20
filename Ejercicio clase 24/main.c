@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     }
     free(p); // liberamos esta struct porque no se guardo en el array (cuando ingrese salir)
 
+    list_remove(2);
     // luego los imprimirmos
     int i;
     for(i=0; i<list_getSize();i++)
@@ -49,5 +50,4 @@ int main(int argc, char *argv[])
 
    return 0;
 }
-
 
