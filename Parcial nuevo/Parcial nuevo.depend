@@ -1,9 +1,16 @@
 # depslib dependency file v1.0
-1560797234 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\main.c
+1561237636 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 	<string.h>
+	"fecha.h"
+	"marca.h"
+	"auto.h"
+	"color.h"
+	"cliente.h"
+	"servicio.h"
+	"trabajo.h"
 
 1559847238 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\autos.c
 	<stdio.h>
@@ -23,7 +30,8 @@
 	<ctype.h>
 	<string.h>
 
-1559847264 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\fecha.c
+1561236571 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\fecha.c
+	"fecha.h"
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -52,4 +60,58 @@
 	<stdlib.h>
 	<ctype.h>
 	<string.h>
+
+1561235239 c:\users\andy\desktop\cimma\c-public\parcial nuevo\fecha.h
+
+1561231646 c:\users\andy\desktop\cimma\c-public\parcial nuevo\marca.h
+
+1561231868 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\marca.c
+	"marca.h"
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1561237484 c:\users\andy\desktop\cimma\c-public\parcial nuevo\auto.h
+	"marca.h"
+	"color.h"
+	"cliente.h"
+	"servicio.h"
+	"trabajo.h"
+
+1561235296 c:\users\andy\desktop\cimma\c-public\parcial nuevo\color.h
+
+1561236315 c:\users\andy\desktop\cimma\c-public\parcial nuevo\cliente.h
+
+1561236722 c:\users\andy\desktop\cimma\c-public\parcial nuevo\servicio.h
+
+1561237395 c:\users\andy\desktop\cimma\c-public\parcial nuevo\trabajo.h
+	"fecha.h"
+	"servicio.h"
+
+1561237626 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\auto.c
+	"auto.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1561235404 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\color.c
+	"color.h"
+	<stdio.h>
+	<stdlib.h>
+
+1561236386 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\cliente.c
+	"cliente.h"
+
+1561236690 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\servicio.c
+	"servicio.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1561237418 source:c:\users\andy\desktop\cimma\c-public\parcial nuevo\trabajo.c
+	"trabajo.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
 
