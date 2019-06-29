@@ -40,6 +40,15 @@ int menu()
     printf("Y- Informar la marca de autos que efectuaron mas lavados completos.\n");
     printf("Z- Listar los autos que recibieron trabajos en una fecha determinada.\n\n");
 
+    printf("J- Informar que cantidad de autos hay de cada color para una marca de auto\n");
+    printf("K- Mostrar las patentes de los autos grises\n");
+    printf("L- Muestro los autos que sean de la misma marca que el auto de la patente ingresada\n");
+    printf("M- Listar los autos de hombre\n");
+    printf("N- Listar el nombre de los clientes con autos marca Renaul\n");
+    printf("O- Cantidad de pulidos realizados a autos de mujeres\n");
+    printf("P- Listar la marca de autos mas elegida por mujeres\n");
+    printf("Q- Mostrar los nombres de las personas que efectuaron lavados\n\n");
+
     printf("Ingrese una opcion: ");
     fflush(stdin);
     scanf("%c", &opcion);

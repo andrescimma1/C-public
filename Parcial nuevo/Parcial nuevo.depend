@@ -115,3 +115,77 @@
 	<string.h>
 	<stdlib.h>
 
+1561768790 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"fecha.h"
+	"marca.h"
+	"auto.h"
+	"color.h"
+	"cliente.h"
+	"servicio.h"
+	"trabajo.h"
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\fecha.h
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\marca.h
+
+1561767900 d:\cimma rec 1 parcial\c-public\parcial nuevo\auto.h
+	"marca.h"
+	"color.h"
+	"cliente.h"
+	"servicio.h"
+	"trabajo.h"
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\color.h
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\cliente.h
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\servicio.h
+
+1561758521 d:\cimma rec 1 parcial\c-public\parcial nuevo\trabajo.h
+	"fecha.h"
+	"servicio.h"
+
+1561767878 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\auto.c
+	"auto.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1561758521 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\cliente.c
+	"cliente.h"
+
+1561758521 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\color.c
+	"color.h"
+	<stdio.h>
+	<stdlib.h>
+
+1561761147 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\fecha.c
+	"fecha.h"
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1561758521 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\marca.c
+	"marca.h"
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1561758521 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\servicio.c
+	"servicio.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1561758521 source:d:\cimma rec 1 parcial\c-public\parcial nuevo\trabajo.c
+	"trabajo.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+

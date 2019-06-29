@@ -887,3 +887,317 @@ void autosConTrabajoEnFechaDeterminada(eAuto listaut[], int len, eMarca listmarc
         }
     }
 }
+
+void cantidadAutosDeCadaColorPorMarca(eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eAuto listaut[], int len)
+{
+    system("cls");
+
+    int marcaIngresada;
+
+    /*{5000, "Negro"},
+    {5001, "Blanco"},
+    {5002, "Gris"},
+    {5003, "Rojo"},
+    {5004, "Azul"}*/
+
+    listarMarcas(listmarcas, lenmarcas);
+    printf("Ingrese el ID de una marca: ");
+    scanf("%d", &marcaIngresada);
+
+    int i;
+    int contNegro = 0, contBlanco = 0, contGris = 0, contRojo = 0, contAzul = 0;
+    for(i=0; i<len; i++)
+    {
+        if(marcaIngresada == listaut[i].idMarca && listaut[i].id == 1)
+        {
+            if(listaut[i].idColor == 5000)
+            {
+                contNegro++;
+            }
+            else if(listaut[i].idColor == 5001)
+            {
+                contBlanco++;
+            }
+            else if(listaut[i].idColor == 5002)
+            {
+                contGris++;
+            }
+            else if(listaut[i].idColor == 5003)
+            {
+                contRojo++;
+            }
+            else
+            {
+                contAzul++;
+            }
+        }
+    }
+
+    printf("\n\nLa cantidad de autos que hay de cada color para la marca ingresada son:\n");
+    printf("*Negro: %d\n", contNegro);
+    printf("*Blanco: %d\n", contBlanco);
+    printf("*Gris: %d\n", contGris);
+    printf("*Rojo: %d\n", contRojo);
+    printf("*Azul: %d\n", contAzul);
+}
+
+void mostrarPatentesAutosGrises(eAuto listaut[], int len)
+{
+    system("cls");
+
+    int i;
+    int noSeEncontro = 0;
+
+    printf("*** Patentes de los autos grises ***\n\n");
+
+    for(i=0; i<len; i++)
+    {
+        if(listaut[i].idColor == 5002 && listaut[i].id == 1) // 5002 es Gris
+        {
+            printf("%s\n", listaut[i].patente);
+            noSeEncontro = 1;
+        }
+    }
+
+    if(noSeEncontro == 0)
+    {
+        printf("No se ha encontrado ninguna patente\n\n");
+    }
+}
+
+void mostrarAutosMismaMarcaPatenteIngresada(eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int seEncontro = 0;
+    char patenteIngresada[7];
+    int idMarcaEncontrada;
+
+    printf("Autos de la misma marca que el auto de la patente ingresada\n\n");
+
+    listarAutos(listaut, len, listmarcas, lenmarcas, listcolores, lencolores, listclientes, lenclientes);
+    printf("\n\nIngrese una patente: ");
+    fflush(stdin);
+    gets(patenteIngresada);
+
+    int i;
+    for(i=0; i<len; i++)
+    {
+        if(strcmp(patenteIngresada, listaut[i].patente) == 0 && listaut[i].id == 1)
+        {
+            idMarcaEncontrada = listaut[i].idMarca;
+            seEncontro = 1;
+        }
+    }
+
+    for(i=0; i<len; i++)
+    {
+        if(listaut[i].idMarca == idMarcaEncontrada)
+        {
+            listarAuto(listaut[i], listmarcas, lenmarcas, listcolores, lencolores, listclientes[i]);
+        }
+    }
+
+    if(seEncontro == 0)
+    {
+        printf("No se han encontrado autos\n\n");
+    }
+}
+
+void listarAutosHombre(eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int i, j;
+    int seEncontro = 0;
+
+    printf("*** Autos de hombre ***\n\n");
+
+    for(i=0; i<len; i++)
+    {
+        if(listaut[i].id == 1)
+        {
+            for(j=0; j<lenclientes; j++)
+            {
+                if(listclientes[j].sexo == 'm' && listaut[i].id == 1 && listclientes[j].id == 1)
+                {
+                    listarAuto(listaut[i], listmarcas, lenmarcas, listcolores, lencolores, listclientes[i]);
+                    i++;
+                    seEncontro = 1;
+                }
+            }
+        }
+    }
+
+    if(seEncontro == 0)
+    {
+        printf("No se encontraron autos\n\n");
+    }
+}
+
+void listarNombreClientesRenault(eAuto listaut[], int len, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int i;
+    int seEncontro = 0;
+
+    printf("Listado de clientes con marca Renault\n\n");
+
+    for(i=0; i<len; i++)
+    {
+        if(listaut[i].id == 1 && listaut[i].idMarca == 1000) // 1000 Renault
+        {
+            printf("%s\n", listclientes[i].nombre);
+            seEncontro = 1;
+        }
+    }
+
+    if(seEncontro == 0)
+    {
+        printf("No se encontraron clientes\n\n");
+    }
+}
+
+void cantidadDePulidosAmujeres(eTrabajo listtrabajos[], int lentrabajos, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int i, j;
+    int cont = 0;
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        if(listtrabajos[i].estado == 1) //20001 Pulidos
+        {
+            for(j=0; j<lenclientes; j++)
+            {
+                if(listtrabajos[i].idServicio == 20001 && listclientes[j].sexo == 'f' && listclientes[j].id == 1)
+                {
+                    cont++;
+                    i++;
+                }
+            }
+
+        }
+    }
+
+    if(cont == 0)
+    {
+        printf("No hay autos que mostrar\n\n");
+    }
+    else
+    {
+        printf("Cantidad de pulidos realizados a autos de mujeres: %d\n\n", cont);
+    }
+}
+
+void mostrarNombresPersonasConLavados(eTrabajo listtrabajos[], int lentrabajos, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int i, j;
+    int seEncontro = 0;
+
+    printf("Nombres de las personas que efectuaron lavados\n\n");
+
+    for(i=0; i<lentrabajos; i++)
+    {
+        if(listtrabajos[i].estado == 1)
+        {
+            for(j=0; j<lenclientes; j++)
+            {
+                if(listtrabajos[i].estado == 1 && listtrabajos[i].idServicio == 20000 && listclientes[j].id == 1) //20000 Lavado
+                {
+                    printf("%s", listclientes[j].nombre);
+                    seEncontro = 1;
+                    i++;
+                }
+            }
+        }
+    }
+
+    if(seEncontro == 0)
+    {
+        printf("No se han encontrado personas\n\n");
+    }
+
+}
+
+void listarMarcaElegidaPorMujeres(eAuto listaut[], int len, eCliente listclientes[], int lenclientes)
+{
+    system("cls");
+
+    int i, j;
+
+    int contRenault = 0, contFiat = 0, contFord = 0, contChevrolet = 0, contPeugeot = 0;
+
+    /*{
+                           {1000, "Renault"},
+                           {1001, "Fiat"},
+                           {1002, "Ford"},
+                           {1003, "Chevrolet"},
+                           {1004, "Peugeot"}
+                           };*/
+
+    for(i=0; i<len; i++)
+    {
+        if(listaut[i].id == 1)
+        {
+            for(j=0; j<lenclientes; j++)
+            {
+                if(listaut[i].idMarca == 1000 && listclientes[j].id == 1)
+                {
+                    contRenault++;
+                    i++;
+                }
+                else if(listaut[i].idMarca == 1001 && listclientes[j].id == 1)
+                {
+                    contFiat++;
+                    i++;
+                }
+                else if(listaut[i].idMarca == 1002 && listclientes[j].id == 1)
+                {
+                    contFord++;
+                    i++;
+                }
+                else if(listaut[i].idMarca == 1003 && listclientes[j].id == 1)
+                {
+                    contChevrolet++;
+                    i++;
+                }
+                else
+                {
+                    contPeugeot++;
+                    i++;
+                }
+            }
+
+        }
+    }
+
+    if(contRenault > contFiat && contRenault > contFord && contRenault > contChevrolet && contRenault > contPeugeot)
+    {
+        printf("La marca de autos mas elegida por mujeres es Renault\n\n");
+    }
+    else if(contFiat > contRenault && contFiat > contFord && contFiat > contChevrolet && contFiat > contPeugeot)
+    {
+        printf("La marca de autos mas elegida por mujeres es Fiat\n\n");
+    }
+    else if(contFord > contFiat && contFord > contRenault && contFord > contChevrolet && contFord > contPeugeot)
+    {
+        printf("La marca de autos mas elegida por mujeres es Ford\n\n");
+    }
+    else if(contChevrolet > contFiat && contChevrolet > contFord && contChevrolet > contRenault && contChevrolet > contPeugeot)
+    {
+        printf("La marca de autos mas elegida por mujeres es Chevrolet\n\n");
+    }
+    else if(contPeugeot > contFiat && contPeugeot > contFord && contPeugeot > contChevrolet && contPeugeot > contRenault)
+    {
+        printf("La marca de autos mas elegida por mujeres es Peugeot\n\n");
+    }
+    else
+    {
+        printf("No se han encontrado marcas elegidas por mujeres\n\n");
+    }
+}

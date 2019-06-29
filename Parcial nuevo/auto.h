@@ -35,6 +35,13 @@ void trabajosAutosBlancos(eAuto listaut[], int len, eMarca listmarcas[], int len
 void altaTrabajo(eTrabajo listtrabajos[], int lentrabajos, eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eServicio listservicios[], int lenservicios, eCliente listclientes[], int lenclientes);
 void marcaConMasLavadosCompletos(eMarca listmarcas[], int lenmarcas, eAuto listaut[], int len, eServicio listservicios[], int lenservicios, eTrabajo listtrabajos[], int lentrabajos);
 void autosConTrabajoEnFechaDeterminada(eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eTrabajo listtrabajos[], int lentrabajos, eServicio listservicios[], int lenservicios, eCliente listclientes[], int lenclientes);
-
+void cantidadAutosDeCadaColorPorMarca(eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eAuto listaut[], int len);
+void mostrarPatentesAutosGrises(eAuto listaut[], int len);
+void mostrarAutosMismaMarcaPatenteIngresada(eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eCliente listclientes[], int lenclientes);
+void listarAutosHombre(eAuto listaut[], int len, eMarca listmarcas[], int lenmarcas, eColor listcolores[], int lencolores, eCliente listclientes[], int lenclientes);
+void listarNombreClientesRenault(eAuto listaut[], int len, eCliente listclientes[], int lenclientes);
+void cantidadDePulidosAmujeres(eTrabajo listtrabajos[], int lentrabajos, eCliente listclientes[], int lenclientes);
+void listarMarcaElegidaPorMujeres(eAuto listaut[], int len, eCliente listclientes[], int lenclientes);
+void mostrarNombresPersonasConLavados(eTrabajo listtrabajos[], int lentrabajos, eCliente listclientes[], int lenclientes);
 
 #endif // AUTO_H_INCLUDED

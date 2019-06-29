@@ -17,6 +17,7 @@
 #define TAMSER 4
 #define TAMTRA 10
 
+
 int main()
 {
     char seguir = 's';
@@ -136,6 +137,38 @@ int main()
                 break;
             case 'z':
                 autosConTrabajoEnFechaDeterminada(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayTrabajos, TAMTRA, arrayServicios, TAMSER, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'j':
+                cantidadAutosDeCadaColorPorMarca(arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayAutos, TAMAUT);
+                system("pause");
+                break;
+            case 'k':
+                mostrarPatentesAutosGrises(arrayAutos, TAMAUT);
+                system("pause");
+                break;
+            case 'l':
+                mostrarAutosMismaMarcaPatenteIngresada(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'm':
+                listarAutosHombre(arrayAutos, TAMAUT, arrayMarcas, TAMMAR, arrayColores, TAMCOL, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'n':
+                listarNombreClientesRenault(arrayAutos, TAMAUT, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'o':
+                cantidadDePulidosAmujeres(arrayTrabajos, TAMTRA, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'p':
+                listarMarcaElegidaPorMujeres(arrayAutos, TAMAUT, arrayClientes, TAMCLI);
+                system("pause");
+                break;
+            case 'q':
+                mostrarNombresPersonasConLavados(arrayTrabajos, TAMTRA, arrayClientes, TAMCLI);
                 system("pause");
                 break;
             default:
